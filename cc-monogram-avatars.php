@@ -1,14 +1,14 @@
 <?php
 /**
  *
- * @package   CC JSON Login
+ * @package   CC Monogram Avatars
  * @author    David Cavins
  * @license   GPL-2.0+
  * @copyright 2014 CommmunityCommons.org
  *
  * @wordpress-plugin
  * Plugin Name:       CC Monogram Avatars
- * Description:       Replaces mystery man avatars with monograms
+ * Description:       Replaces mystery man default avatars with monograms.
  * Version:           1.0.0
  * Author:            David Cavins
  * Text Domain:       cc-monogram-avatars
@@ -33,7 +33,7 @@ function cc_monogram_avatars_class_init() {
 	// The main class
 	require_once( plugin_dir_path( __FILE__ ) . 'public/class-cc-monogram-avatars.php' );
 
-	add_action( 'bp_init', array( 'CC_Monogram_Avatars', 'get_instance' ), 21 );
+	add_action( 'bp_init', array( 'CC_Monogram_Avatars', 'get_instance' ), 11 );
 
 }
 add_action( 'bp_init', 'cc_monogram_avatars_class_init' );

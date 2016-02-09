@@ -1,6 +1,6 @@
 <?php
 /**
- * @package   CC JSON Login
+ * @package   CC Monogram Avatars
  * @author    CARES staff
  * @license   GPL-2.0+
  * @copyright 2014 CommmunityCommons.org
@@ -11,7 +11,7 @@
  * public-facing side of the WordPress site.
  *
  *
- * @package CC Group Narratives
+ * @package CC Monogram Avatars
  * @author  David Cavins
  */
 class CC_Monogram_Avatars {
@@ -63,7 +63,10 @@ class CC_Monogram_Avatars {
 		add_filter( 'bp_core_fetch_avatar', array( $this, 'replace_default_avatar' ), 10, 9 );
 
 		// Load public-facing style sheet and JavaScript.
+		// On the front end.
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles_scripts' ) );
+		// In the admin area.
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles_scripts' ) );
 
 	}
 
@@ -121,12 +124,12 @@ class CC_Monogram_Avatars {
 	 */
 	public function replace_default_avatar( $avatar, $params, $item_id, $avatar_dir, $html_css_id, $html_width, $html_height, $avatar_folder_url, $avatar_folder_dir ){
 
-	    // Do nothing if this is not the default
+	    // Do nothing if this is not the default.
 	    if ( strrpos( $avatar, 'bp-core/images/mystery-man') === false ) {
 			return $avatar;
 	    }
 
-	    // Group avatar
+	    // Replace the default mystery man group avatar.
 	    if ( $params['object'] == 'group' ) {
 	      $html_class = ' class="' . sanitize_html_class( $params['class'] ) . ' ' . sanitize_html_class( $params['object'] . '-' . $params['item_id'] . '-avatar' ) . ' ' . sanitize_html_class( 'avatar-' . $params['width'] ) . ' photo"';
 	      $avatar = '<img src="' . cc_monogram_plugin_base_uri() . '/public/img/cc-default-group-avatar"' . $html_css_id . $html_class . $html_width . $html_height . ' alt="default group photo"/>';
