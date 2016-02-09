@@ -132,7 +132,7 @@ class CC_Monogram_Avatars {
 	    // Replace the default mystery man group avatar.
 	    if ( $params['object'] == 'group' ) {
 	      $html_class = ' class="' . sanitize_html_class( $params['class'] ) . ' ' . sanitize_html_class( $params['object'] . '-' . $params['item_id'] . '-avatar' ) . ' ' . sanitize_html_class( 'avatar-' . $params['width'] ) . ' photo"';
-	      $avatar = '<img src="' . cc_monogram_plugin_base_uri() . '/public/img/cc-default-group-avatar"' . $html_css_id . $html_class . $html_width . $html_height . ' alt="default group photo"/>';
+	      $avatar = '<img src="' . cc_monogram_plugin_base_uri() . 'public/img/cc-default-group-avatar.png"' . $html_css_id . $html_class . $html_width . $html_height . ' alt="default group photo"/>';
 	    }
 
 	    // User avatar
@@ -162,22 +162,23 @@ class CC_Monogram_Avatars {
 
 			// Choose a background color and scale for the background image.
 			$letter = substr( $monogram, 0, 1 );
-			if ( strcasecmp( $letter, 'F') <= 0 ) {
-				$color = 'ccyellow';
-				$scale = 'scale-50';
-			} else if ( strcasecmp( $letter, 'L') <= 0  ) {
-				$color = 'ccblue';
-				$scale = 'scale-80';
-			} else if ( strcasecmp( $letter, 'R') <= 0  ) {
-				$color = 'ccred';
-				$scale = 'scale-65';
-			} else {
-				$color = 'ccgreen';
-				$scale = 'scale-35';
-			}
-
 			// We're not currently using a background image, so scale isn't needed.
 			$scale = '';
+			if ( strcasecmp( $letter, 'F') <= 0 ) {
+				$color = 'ccyellow';
+				// $scale = 'scale-50';
+			} else if ( strcasecmp( $letter, 'L') <= 0  ) {
+				$color = 'ccblue';
+				// $scale = 'scale-80';
+			} else if ( strcasecmp( $letter, 'R') <= 0  ) {
+				$color = 'ccred';
+				// $scale = 'scale-65';
+			} else {
+				$color = 'ccgreen';
+				// $scale = 'scale-35';
+			}
+
+
 
 			$avatar = '<span class="avatar monogram monogram-' . $params['width'] . ' ' . $color . ' ' . $scale . '"' . $offset . '>' . $monogram . '</span>';
 	    }

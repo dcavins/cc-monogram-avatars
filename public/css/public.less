@@ -6,6 +6,7 @@
 
 .monogram {
 	display: inline-block;
+	margin: 2px;
 	/*background-color: #DDD;*/
 	/*background-color: desaturate( lighten( @ccblue, 15% ), 10% );*/
 	/*background-image: url( ../img/cc-default-user-avatar-100.png );*/
@@ -14,6 +15,12 @@
 	/*border-radius: 50%;*/
 	text-align: center;
 	color: white;
+}
+	.monogram.monogram-14 {
+		width: 14px;
+		line-height: 14px;
+		font-size: 7.7px;
+		font-size: .55rem;
 }
 	.monogram.monogram-20 {
 		width: 20px;
@@ -33,11 +40,25 @@
 		font-size: 14px;
 		font-size: 1rem;
 	}
+	// comments-area
+	.monogram.monogram-44 {
+		width: 44px;
+		line-height: 44px;
+		font-size: 18px;
+		font-size: 1.3rem;
+	}
 	.monogram.monogram-50 {
 		width: 50px;
 		line-height: 50px;
 		font-size: 19.6px;
 		font-size: 1.4rem;
+	}
+	// Used in bbPress forums
+	.monogram.monogram-80 {
+		width: 80px;
+		line-height: 80px;
+		font-size: 31.3px;
+		font-size: 2.24rem;
 	}
 	.monogram.monogram-100 {
 		width: 100px;
@@ -87,3 +108,7 @@
 		float: none !important;
 		margin: 0px 5px -8px 0px !important;
 	}
+// Comments
+.comments-area article header .monogram {
+	float: left; // Would love for the following <cite> to not be display: block
+}
