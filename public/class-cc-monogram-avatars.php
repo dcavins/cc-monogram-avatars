@@ -57,7 +57,7 @@ class CC_Monogram_Avatars {
 	 */
 	private function __construct() {
 		// Tell BP to not use gravatars
-		add_filter( 'bp_core_fetch_avatar_no_grav', array( $this, 'filter_bp_core_fetch_avatar_no_grav' ) );
+		add_filter( 'bp_core_fetch_avatar_no_grav', '__return_true' );
 
 		// Replace the mystery man with our on-the-fly avatars.
 		add_filter( 'bp_core_fetch_avatar', array( $this, 'replace_default_avatar' ), 10, 9 );
@@ -68,6 +68,13 @@ class CC_Monogram_Avatars {
 		// In the admin area.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles_scripts' ) );
 
+		// Remove BP's group avatar default filters:
+		remove_filter( 'bp_core_avatar_default',       'bp_groups_default_avatar', 10, 3 );
+		remove_filter( 'bp_core_avatar_default_thumb', 'bp_groups_default_avatar', 10, 3 );
+
+		// Add our group avatar default filters:
+		add_filter( 'bp_core_avatar_default',       array( $this, 'bp_groups_default_avatar' ), 10, 3 );
+		add_filter( 'bp_core_avatar_default_thumb', array( $this, 'bp_groups_default_avatar' ), 10, 3 );
 	}
 
 	/**
@@ -109,15 +116,6 @@ class CC_Monogram_Avatars {
 	}
 
 	/**
-	 * Tell BP to not use gravatars.
-	 *
-	 * @since    1.0.0
-	 */
-	public function filter_bp_core_fetch_avatar_no_grav( $fetch ) {
-		return true;
-	}
-
-	/**
 	 * Replace the mystery man with our on-the-fly avatars.
 	 *
 	 * @since    1.0.0
@@ -127,12 +125,6 @@ class CC_Monogram_Avatars {
 	    // Do nothing if this is not the default.
 	    if ( strrpos( $avatar, 'bp-core/images/mystery-man') === false ) {
 			return $avatar;
-	    }
-
-	    // Replace the default mystery man group avatar.
-	    if ( $params['object'] == 'group' ) {
-	      $html_class = ' class="' . sanitize_html_class( $params['class'] ) . ' ' . sanitize_html_class( $params['object'] . '-' . $params['item_id'] . '-avatar' ) . ' ' . sanitize_html_class( 'avatar-' . $params['width'] ) . ' photo"';
-	      $avatar = '<img src="' . cc_monogram_plugin_base_uri() . 'public/img/cc-default-group-avatar.png"' . $html_css_id . $html_class . $html_width . $html_height . ' alt="default group photo"/>';
 	    }
 
 	    // User avatar
@@ -184,6 +176,27 @@ class CC_Monogram_Avatars {
 	    }
 
 	    return $avatar;
+	}
+
+	/**
+	 * Use a custom default avatar for groups.
+	 *
+	 * @param string $avatar Current avatar src.
+	 * @param array  $params Avatar params.
+	 * @return string
+	 */
+	function bp_groups_default_avatar( $avatar, $params ) {
+		if ( isset( $params['object'] ) && 'group' === $params['object'] ) {
+			if ( isset( $params['type'] ) && 'thumb' === $params['type'] ) {
+				$file = 'cc-default-group-avatar-50.png';
+			} else {
+				$file = 'cc-default-group-avatar.png';
+			}
+
+			$avatar = cc_monogram_plugin_base_uri() . "public/img/$file";
+		}
+
+		return $avatar;
 	}
 
 }
